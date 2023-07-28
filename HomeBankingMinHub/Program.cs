@@ -1,4 +1,4 @@
-using HomeBankingMinHub.Models;
+using HomeBankingMindHub.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

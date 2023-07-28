@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace HomeBankingMinHub.Models
+namespace HomeBankingMindHub.Models
 {
     public class HomeBankingContext: DbContext
     {
@@ -9,5 +9,7 @@ namespace HomeBankingMinHub.Models
         }
         //dbsets
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Account> Account { get; set; }
+
     }
 }

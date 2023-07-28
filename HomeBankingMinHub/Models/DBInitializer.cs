@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
-namespace HomeBankingMinHub.Models
+namespace HomeBankingMindHub.Models
 {
     public class DBInitializer
     {
@@ -12,6 +13,7 @@ namespace HomeBankingMinHub.Models
             {
                 var clients = new Client[]
                 {
+                    
                     new Client
                     {
                         FirstName = "Victor",
@@ -26,6 +28,20 @@ namespace HomeBankingMinHub.Models
                         Email = "tatiana.quarin@gmail.com",
                         Password = "12345",
                     },
+                    new Client
+                    {
+                        FirstName = "Lucia",
+                        LastName = "Ramirez",
+                        Email = "lu.ra@gmail.com",
+                        Password = "3562",
+                    },
+                    new Client
+                    {
+                        FirstName = "Juan",
+                        LastName = "Perez",
+                        Email = "perezjuan@gmail.com",
+                        Password = "hora2315",
+                    },
                 };
 
                 foreach (var client in clients)
@@ -34,7 +50,28 @@ namespace HomeBankingMinHub.Models
                 }
             }
              context.SaveChanges();
+
+            if (!context.Account.Any())
+            {
+                var accountVictor = context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com");
+                if (accountVictor != null)
+                {
+                    var accounts = new Account[]
+                    {
+                        new Account {ClientId = accountVictor.Id, CreationDate = DateTime.Now, Number = string.Empty, Balance = 0 }
+                    };
+                    foreach (Account account in accounts)
+                    {
+                        context.Account.Add(account);
+                    }
+                    context.SaveChanges();
+
+                }
+            }
+
         }
+
+ 
     }
 }
 
