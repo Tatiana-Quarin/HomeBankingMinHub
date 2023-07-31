@@ -1,6 +1,7 @@
 ﻿using HomeBankingMindHub.Models;
-
+using HomeBankingMinHub.Models;
 using System;
+using System.Collections.Generic;
 
 
 
@@ -20,10 +21,7 @@ namespace HomeBankingMindHub.dtos
 
         public double Balance { get; set; }
 
-        public Client Client { get; set; }
-
-        public long ClientId { get; set; }
-
+        public ICollection<TransactionDTO> Transactions { get; set; }
     }
 
 }
