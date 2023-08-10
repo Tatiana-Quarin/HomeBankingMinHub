@@ -1,3 +1,5 @@
+using HomebankingMindHub.Models;
+using HomeBankingMindHub;
 using HomeBankingMindHub.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomeBankingMinHub
+namespace HomebankingMindHub
 {
     public class Program
     {

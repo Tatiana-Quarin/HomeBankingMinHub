@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HomeBankingMinHub.Migrations
+namespace HomeBankingMindHub.Migrations
 {
     public partial class InicialCreateTransaction : Migration
     {

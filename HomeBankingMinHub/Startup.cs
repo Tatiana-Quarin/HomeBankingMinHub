@@ -1,5 +1,5 @@
-using HomeBankingMindHub.Repositories;
-using HomeBankingMindHub.Models;
+using HomebankingMindHub.Repositories;
+using HomebankingMindHub.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using HomeBankingMinHub.Repositories;
+using HomeBankingMindHub.Repositories;
+using HomeBankingMindHub.Models;
 
-namespace HomeBankingMinHub
+namespace HomeBankingMindHub
 {
     public class Startup
     {

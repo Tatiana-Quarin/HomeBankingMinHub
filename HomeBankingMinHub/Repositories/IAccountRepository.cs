@@ -3,8 +3,9 @@ using HomeBankingMindHub.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using HomebankingMindHub.Models;
 
-namespace HomeBankingMinHub.Repositories
+namespace HomebankingMindHub.Repositories
 {
     public interface IAccountRepository
     {

@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "HomeBankingMinHub": {
+    "HomeBankingMindHub": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

@@ -1,6 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using HomebankingMindHub.Models;
+using HomeBankingMindHub.Models;
+using System;
+using System.Collections.Generic;
 
-namespace HomeBankingMindHub.Models
+
+
+namespace HomebankingMindHub.Models
 {
     public class Client
     {
@@ -10,5 +15,7 @@ namespace HomeBankingMindHub.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public ICollection<Account> Accounts { get; set; }
+        public ICollection<ClientLoan> ClientLoans { get; set; }
+        public ICollection<Card> Cards { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿
 using HomeBankingMindHub.Models;
 using System.Collections.Generic;
+using HomebankingMindHub.Models;
+using System.Linq;
 
 namespace HomeBankingMindHub.Repositories
 {

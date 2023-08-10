@@ -1,8 +1,9 @@
-﻿using HomeBankingMindHub.Models;
+﻿using HomebankingMindHub.Models;
 using System;
 using System.Text.Json.Serialization;
+using System.Linq;
 
-namespace HomeBankingMinHub.Models
+namespace HomebankingMindHub.dtos
 {
     public class TransactionDTO
     {

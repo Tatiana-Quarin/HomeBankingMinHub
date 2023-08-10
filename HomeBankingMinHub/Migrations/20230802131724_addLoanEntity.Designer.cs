@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeBankingMindHub.Migrations
 {
     [DbContext(typeof(HomeBankingContext))]
-    [Migration("20230731125409_InicialCreateTransaction")]
-    partial class InicialCreateTransaction
+    [Migration("20230802131724_addLoanEntity")]
+    partial class addLoanEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,58 @@ namespace HomeBankingMindHub.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("HomeBankingMindHub.Models.ClientLoan", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LoadId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("LoanId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Payments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("LoanId");
+
+                    b.ToTable("ClientLoans");
+                });
+
+            modelBuilder.Entity("HomeBankingMindHub.Models.Loan", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("MaxAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Payments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Loans");
+                });
 
             modelBuilder.Entity("HomeBankingMindHub.Models.Account", b =>
                 {
@@ -100,6 +152,23 @@ namespace HomeBankingMindHub.Migrations
                     b.ToTable("Transactions");
                 });
 
+            modelBuilder.Entity("HomeBankingMindHub.Models.ClientLoan", b =>
+                {
+                    b.HasOne("HomeBankingMindHub.Models.Client", "Client")
+                        .WithMany("ClientLoans")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HomeBankingMindHub.Models.Loan", "Loan")
+                        .WithMany("ClientLoans")
+                        .HasForeignKey("LoanId");
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Loan");
+                });
+
             modelBuilder.Entity("HomeBankingMindHub.Models.Account", b =>
                 {
                     b.HasOne("HomeBankingMindHub.Models.Client", "Client")
@@ -122,6 +191,11 @@ namespace HomeBankingMindHub.Migrations
                     b.Navigation("Account");
                 });
 
+            modelBuilder.Entity("HomeBankingMindHub.Models.Loan", b =>
+                {
+                    b.Navigation("ClientLoans");
+                });
+
             modelBuilder.Entity("HomeBankingMindHub.Models.Account", b =>
                 {
                     b.Navigation("Transactions");
@@ -130,6 +204,8 @@ namespace HomeBankingMindHub.Migrations
             modelBuilder.Entity("HomeBankingMindHub.Models.Client", b =>
                 {
                     b.Navigation("Accounts");
+
+                    b.Navigation("ClientLoans");
                 });
 #pragma warning restore 612, 618
         }

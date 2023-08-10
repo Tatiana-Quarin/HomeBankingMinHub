@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomeBankingMinHub.Pages
+namespace HomeBankingMindHub.Pages
 {
     public class IndexModel : PageModel
     {

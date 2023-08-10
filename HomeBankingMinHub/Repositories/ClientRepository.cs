@@ -1,10 +1,11 @@
-﻿
-using HomeBankingMindHub.Models;
+﻿using HomeBankingMindHub.Repositories;
+using HomebankingMindHub.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using HomeBankingMindHub.Models;
 
-namespace HomeBankingMindHub.Repositories
+namespace HomebankingMindHub.Repositories
 {
     public class ClientRepository : RepositoryBase<Client>, IClientRepository
     {
@@ -16,6 +17,9 @@ namespace HomeBankingMindHub.Repositories
         {
             return FindByCondition(client => client.Id == id)
                 .Include(client => client.Accounts)
+                .Include(client => client.Cards)
+                .Include(client => client.ClientLoans)
+                    .ThenInclude(cl => cl.Loan)
                 .FirstOrDefault();
         }
 
@@ -23,6 +27,9 @@ namespace HomeBankingMindHub.Repositories
         {
             return FindAll()
                 .Include(client => client.Accounts)
+                .Include(client => client.Cards)
+                .Include(client => client.ClientLoans)
+                    .ThenInclude(cl => cl.Loan)
                 .ToList();
         }
 
@@ -31,5 +38,6 @@ namespace HomeBankingMindHub.Repositories
             Create(client);
             SaveChanges();
         }
+
     }
 }
