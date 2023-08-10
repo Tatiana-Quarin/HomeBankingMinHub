@@ -13,6 +13,8 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using HomeBankingMindHub.Repositories;
 using HomeBankingMindHub.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace HomeBankingMindHub
 {
@@ -25,7 +27,6 @@ namespace HomeBankingMindHub
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
@@ -37,10 +38,22 @@ namespace HomeBankingMindHub
             services.AddScoped<IClientRepository, ClientRepository>();
 
             services.AddScoped<IAccountRepository, AccountRepository>();
+            
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.LoginPath = new PathString("/index.html");
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ClientOnly", policy => policy.RequireClaim("Client"));
+            });
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+       
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -56,12 +69,16 @@ namespace HomeBankingMindHub
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=games}/{ action = Get}");
 
             });
         }
