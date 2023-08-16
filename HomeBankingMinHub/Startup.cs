@@ -51,6 +51,8 @@ namespace HomeBankingMindHub
                 options.AddPolicy("ClientOnly", policy => policy.RequireClaim("Client"));
             });
 
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+
         }
 
        
