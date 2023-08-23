@@ -30,28 +30,30 @@ namespace HomeBankingMindHub
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-
             services.AddDbContext<HomeBankingContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("HomeBankingConexion")));
 
+            //Repositories
             services.AddScoped<IClientRepository, ClientRepository>();
-
             services.AddScoped<IAccountRepository, AccountRepository>();
-            
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options =>
-            {
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-                options.LoginPath = new PathString("/index.html");
-            });
+            services.AddScoped<ICardRepository, CardRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ILoanRepository, LoanRepository>();
+            services.AddScoped<IClientLoanRepository, ClientLoanRepository>();
 
+            //Authentication
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+           .AddCookie(options =>
+           {
+               options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+               options.LoginPath = new PathString("/index.html");
+           });
+
+            //Authorization
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ClientOnly", policy => policy.RequireClaim("Client"));
             });
-
-            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
         }
 

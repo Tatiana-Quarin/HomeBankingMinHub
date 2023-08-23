@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeBankingMindHub.Migrations
 {
     [DbContext(typeof(HomeBankingContext))]
-    [Migration("20230810123542_addCAccountEntity")]
-    partial class addCAccountEntity
+    [Migration("20230822180048_AddAccountEntity")]
+    partial class AddAccountEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

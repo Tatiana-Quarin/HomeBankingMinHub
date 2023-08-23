@@ -1,5 +1,4 @@
-﻿
-using HomebankingMindHub.dtos;
+﻿using HomebankingMindHub.dtos;
 using HomebankingMindHub.Models;
 using HomebankingMindHub.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 
 namespace HomeBankingMindHub.Controllers
 {

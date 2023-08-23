@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace HomeBankingMindHub.Migrations
 {
@@ -7,24 +7,6 @@ namespace HomeBankingMindHub.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ClientLoans_Loans_LoanId",
-                table: "ClientLoans");
-
-            migrationBuilder.DropColumn(
-                name: "LoadId",
-                table: "ClientLoans");
-
-            migrationBuilder.AlterColumn<long>(
-                name: "LoanId",
-                table: "ClientLoans",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L,
-                oldClrType: typeof(long),
-                oldType: "bigint",
-                oldNullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Cards",
                 columns: table => new
@@ -56,46 +38,13 @@ namespace HomeBankingMindHub.Migrations
                 table: "Cards",
                 column: "ClientId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_ClientLoans_Loans_LoanId",
-                table: "ClientLoans",
-                column: "LoanId",
-                principalTable: "Loans",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ClientLoans_Loans_LoanId",
-                table: "ClientLoans");
-
             migrationBuilder.DropTable(
                 name: "Cards");
 
-            migrationBuilder.AlterColumn<long>(
-                name: "LoanId",
-                table: "ClientLoans",
-                type: "bigint",
-                nullable: true,
-                oldClrType: typeof(long),
-                oldType: "bigint");
-
-            migrationBuilder.AddColumn<long>(
-                name: "LoadId",
-                table: "ClientLoans",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ClientLoans_Loans_LoanId",
-                table: "ClientLoans",
-                column: "LoanId",
-                principalTable: "Loans",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
     }
 }

@@ -2,24 +2,24 @@
 
 namespace HomeBankingMindHub.Migrations
 {
-    public partial class addLoanEntity : Migration
+    public partial class AddLoanEntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Loans",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaxAmount = table.Column<double>(type: "float", nullable: false),
-                    Payments = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Loans", x => x.Id);
-                });
+               name: "Loans",
+               columns: table => new
+               {
+                   Id = table.Column<long>(type: "bigint", nullable: false)
+                       .Annotation("SqlServer:Identity", "1, 1"),
+                   Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   MaxAmount = table.Column<double>(type: "float", nullable: false),
+                   Payments = table.Column<string>(type: "nvarchar(max)", nullable: true)
+               },
+               constraints: table =>
+               {
+                   table.PrimaryKey("PK_Loans", x => x.Id);
+               });
 
             migrationBuilder.CreateTable(
                 name: "ClientLoans",
@@ -30,8 +30,7 @@ namespace HomeBankingMindHub.Migrations
                     Amount = table.Column<double>(type: "float", nullable: false),
                     Payments = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientId = table.Column<long>(type: "bigint", nullable: false),
-                    LoadId = table.Column<long>(type: "bigint", nullable: false),
-                    LoanId = table.Column<long>(type: "bigint", nullable: true)
+                    LoanId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,7 +46,7 @@ namespace HomeBankingMindHub.Migrations
                         column: x => x.LoanId,
                         principalTable: "Loans",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -59,6 +58,7 @@ namespace HomeBankingMindHub.Migrations
                 name: "IX_ClientLoans_LoanId",
                 table: "ClientLoans",
                 column: "LoanId");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -68,6 +68,7 @@ namespace HomeBankingMindHub.Migrations
 
             migrationBuilder.DropTable(
                 name: "Loans");
+
         }
     }
 }
