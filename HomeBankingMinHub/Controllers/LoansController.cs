@@ -115,7 +115,7 @@ namespace HomeBankingMindHub.Controllers
                 account.Balance = account.Balance + loanApplication.Amount;
                 _accountRepository.Save(account);
 
-                return Created("Préstamo creado", newClientLoan);
+                return Created("Prestamo creado", newClientLoan);
             }
             catch (Exception ex)
             {

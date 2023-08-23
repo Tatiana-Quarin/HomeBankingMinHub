@@ -1,6 +1,7 @@
 ﻿using HomebankingMindHub.dtos;
 using HomebankingMindHub.Models;
 using HomebankingMindHub.Repositories;
+using HomeBankingMindHub.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,17 +11,20 @@ using System.Linq;
 
 namespace HomeBankingMindHub.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
         private IAccountRepository _accountRepository;
-        public AccountsController(IAccountRepository accountRepository)
+
+        private IClientRepository _clientRepository;
+        public AccountsController(IAccountRepository accountRepository, IClientRepository clientRepository)
         {
             _accountRepository = accountRepository;
+            _clientRepository = clientRepository;
         }
 
-        [HttpGet]
+        [HttpGet("accounts")]
         public IActionResult Get()
         {
             try
@@ -55,7 +59,7 @@ namespace HomeBankingMindHub.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("accounts/{id}")]
         public IActionResult Get(long id)
         {
             try
@@ -86,6 +90,62 @@ namespace HomeBankingMindHub.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
+        }
+
+        [HttpGet("clients/current/accounts")]
+        public IActionResult GetAccounts()
+        {
+            string email = User.FindFirst("Client") != null ? User.FindFirst("Client").Value : string.Empty;
+            if (email == string.Empty)
+            {
+                return Forbid();
+            }
+
+            Client client = _clientRepository.FindByEmail(email);
+
+            if (client == null)
+            {
+                return Forbid();
+            }
+
+            var currentAccounts = _accountRepository.GetAccountsByClient(client.Id);
+            return Ok(currentAccounts);
+        }
+
+        [HttpPost("clients/current/accounts")]
+
+        public IActionResult PostCurrentAccounts()
+        {
+            string email = User.FindFirst("Client") != null ? User.FindFirst("Client").Value : string.Empty;
+            if (email == string.Empty)
+            {
+                return Forbid();
+            }
+
+            Client client = _clientRepository.FindByEmail(email);
+
+            if (client == null)
+            {
+                return Forbid();
+            }
+
+            if (client.Accounts.Count >= 3)
+            {
+                return StatusCode(403, "El maximo de cuentas por cliente es de 3");
+            }
+
+            var random = new Random();
+            var account = new Account
+            {
+                ClientId = client.Id,
+                Number = "VIN-" + random.Next(100000, 1000000).ToString(),
+                CreationDate = DateTime.Now,
+                Balance = 0,
+            };
+
+            _accountRepository.Save(account);
+
+            return Created("", account);
         }
     }
 }
